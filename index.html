@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAMAR | قمر — Premium Fashion Design Platform</title>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS 3.4.x via CDN for styling utility speed -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --color-gold-moon: #D4AF37;
+            --color-gold-glow: rgba(212, 175, 55, 0.15);
+            --color-midnight: #0A0A0A;
+            --color-navy-deep: #102A43;
+            --color-cream-soft: #F7F2EC;
+            --color-beige-warm: #E7DDD2;
+        }
+
+        body {
+            background-color: var(--color-midnight);
+            color: var(--color-cream-soft);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html[dir="rtl"] body {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+        }
+
+        h1, h2, h3, h4, .font-luxury {
+            font-family: 'Playfair Display', serif;
+        }
+
+        html[dir="rtl"] h1, 
+        html[dir="rtl"] h2, 
+        html[dir="rtl"] h3, 
+        html[dir="rtl"] h4,
+        html[dir="rtl"] .font-luxury {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Luxury Custom Utilities */
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .moon-glow {
+            box-shadow: 0 0 60px 15px var(--color-gold-glow);
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #FFF 30%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .border-gold-subtle {
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-midnight);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-gold-moon);
+            border-radius: 3px;
+        }
+
+        /* Custom transition layer classes */
+        .fade-in-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative select-none">
+
+    <!-- Ambient Star Particle Field Layer Canvas -->
+    <canvas id="particleField" class="absolute top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Navigation Header -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-6 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Brand Luxury Logo Structure -->
+            <a href="#" class="flex items-center gap-3 group z-50">
+                <div class="relative w-10 h-10 flex items-center justify-center rounded-full border border-[rgba(212,175,55,0.3)] group-hover:border-[#D4AF37] transition-all duration-500">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="transform group-hover:rotate-12 transition-transform duration-700">
+                        <path d="M12 3a9 9 0 1 0 9 9 9.75 9.75 0 0 1-9-9z" fill="#D4AF37" />
+                        <polygon points="12,7 13,9.5 15.5,10 13.5,11.5 14,14 12,12.5 10,14 10.5,11.5 8.5,10 11,9.5" fill="#FFF" />
+                    </svg>
+                    <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 moon-glow"></div>
+                </div>
+                <span data-i18n="brand.name" class="font-luxury text-xl tracking-[0.2em] font-semibold text-white group-hover:text-[#D4AF37] transition-colors duration-300">
+                    QAMAR
+                </span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="#hero" data-i18n="nav.home" class="text-sm tracking-widest font-light text-[#E7DDD2] hover:text-[#D4AF37] transition-colors py-1 relative group">Home</a>
+                <a href="#academy" data-i18n="nav.academy" class="text-sm tracking-widest font-light text-[#E7DDD2] hover:text-[#D4AF37] transition-colors py-1 relative group">Academy</a>
+                <a href="#showcase" data-i18n="nav.showcase" class="text-sm tracking-widest font-light text-[#E7DDD2] hover:text-[#D4AF37] transition-colors py-1 relative group">Showcase</a>
+                <a href="#ai-studio" data-i18n="nav.studio" class="text-sm tracking-widest font-light text-[#E7DDD2] hover:text-[#D4AF37] transition-colors py-1 flex items-center gap-1 relative group">
+                    AI Studio <span class="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-ping"></span>
+                </a>
+                <a href="#fabrics" data-i18n="nav.fabrics" class="text-sm tracking-widest font-light text-[#E7DDD2] hover:text-[#D4AF37] transition-colors py-1 relative group">Fabrics</a>
+                <a href="#community" data-i18n="nav.community" class="text-sm tracking-widest font-light text-[#E7DDD2] hover:text-[#D4AF37] transition-colors py-1 relative group">Community</a>
+            </div>
+
+            <!-- Global Actions -->
+            <div class="hidden lg:flex items-center gap-4">
+                <button onclick="toggleLanguage()" class="flex items-center gap-2 px-4 py-2 border border-gold-subtle rounded-full text-xs tracking-widest text-[#E7DDD2] hover:bg-[#D4AF37] hover:text-[#0A0A0A] transition-all duration-300">
+                    <span id="langBtnText">العربية</span>
+                </button>
+            </div>
+
+            <!-- Mobile Bar Icon Hamburger -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden text-[#E7DDD2] focus:outline-none z-50">
+                <svg id="hamburgerIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Overlay menu -->
+        <div id="mobileMenu" class="hidden absolute top-full left-0 w-full glass-panel border-t-0 px-6 py-8 flex flex-col gap-6 lg:hidden shadow-2xl">
+            <a href="#hero" onclick="toggleMobileMenu()" data-i18n="nav.home" class="text-base tracking-widest font-light text-[#E7DDD2]">Home</a>
+            <a href="#academy" onclick="toggleMobileMenu()" data-i18n="nav.academy" class="text-base tracking-widest font-light text-[#E7DDD2]">Academy</a>
+            <a href="#showcase" onclick="toggleMobileMenu()" data-i18n="nav.showcase" class="text-base tracking-widest font-light text-[#E7DDD2]">Showcase</a>
+            <a href="#ai-studio" onclick="toggleMobileMenu()" data-i18n="nav.studio" class="text-base tracking-widest font-light text-[#E7DDD2]">AI Studio</a>
+            <a href="#fabrics" onclick="toggleMobileMenu()" data-i18n="nav.fabrics" class="text-base tracking-widest font-light text-[#E7DDD2]">Fabrics</a>
+            <hr class="border-[rgba(212,175,55,0.1)]">
+            <button onclick="toggleLanguage(); toggleMobileMenu();" class="w-full py-3 border border-gold-subtle rounded-full text-sm text-[#E7DDD2] tracking-widest">
+                Language / اللغة
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Section Router Views Container -->
+    <main class="flex-grow z-10">
+
+        <!-- Component 3: Hero High-Art Canvas Section -->
+        <section id="hero" class="min-h-screen flex items-center justify-center relative px-6 text-center pt-20">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <!-- Large Abstract Radial Gold Aura behind typography -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.08)_0%,rgba(0,0,0,0)_70%)] animate-pulse"></div>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-8 relative z-10 fade-in-element visible">
+                <span data-i18n="hero.sub" class="text-xs uppercase tracking-[0.4em] text-[#D4AF37] font-semibold block">Haute Couture Digital Ecosystem</span>
+                <h1 data-i18n="hero.title" class="text-4xl md:text-7xl font-light tracking-tight text-white leading-tight">
+                    Where Lunar Artistry Meets <br><span class="text-gold-gradient font-medium italic">Predictive Design Engineering</span>
+                </h1>
+                <p data-i18n="hero.desc" class="text-sm md:text-lg font-light text-[#E7DDD2]/80 max-w-2xl mx-auto leading-relaxed">
+                    Unifying enterprise fashion academies, smart algorithm vector breakdown engines, and automated multi-tenant textile procurement houses.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 pt-4">
+                    <a href="#showcase" data-i18n="hero.cta1" class="px-8 py-4 bg-[#D4AF37] text-[#0A0A0A] text-xs font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-white transition-all duration-300 shadow-xl">Explore Showcase</a>
+                    <a href="#ai-studio" data-i18n="hero.cta2" class="px-8 py-4 border border-gold-subtle text-white text-xs font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-[#D4AF37] hover:text-[#0A0A0A] transition-all duration-300 backdrop-blur-sm">Launch Studio</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component 5: Fashion Design Showcase & Core Documentation Engine -->
+        <section id="showcase" class="py-24 max-w-7xl mx-auto px-6">
+            <div class="mb-16 border-b border-[rgba(212,175,55,0.1)] pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <span data-i18n="showcase.meta" class="text-xs tracking-[0.3em] uppercase text-[#D4AF37] font-medium block mb-2">Core Platform Showcase</span>
+                    <h2 data-i18n="showcase.title" class="text-3xl md:text-5xl font-light text-white">Design Analysis Ecosystem</h2>
+                </div>
+                <div class="text-xs tracking-widest text-[#E7DDD2]/60 uppercase">
+                    ID: <span class="text-[#D4AF37] font-mono">QMR-2026-X9</span>
+                </div>
+            </div>
+
+            <!-- Complex Grid Layout for Design Documentation Component -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                
+                <!-- Left Sidebar: Illustration Gallery & Quick Specs -->
+                <div class="space-y-8">
+                    <!-- Premium Interactive Technical Card Matrix -->
+                    <div class="glass-panel p-2 relative group overflow-hidden rounded-sm shadow-2xl">
+                        <!-- Simulated Canvas Image Layout (Using layered premium high contrast styling vector layouts) -->
+                        <div class="relative w-full aspect-[3/4] bg-gradient-to-b from-[#102A43]/40 to-[#0A0A0A] flex flex-col items-center justify-center p-6 border border-[rgba(212,175,55,0.05)]">
+                            
+                            <!-- Overlay Badge matrix -->
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="bg-[#6A1E2D] text-white text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-sm border border-red-900/40">Masterpiece</span>
+                            </div>
+
+                            <!-- Abstract Vector representation of high couture sketch asset -->
+                            <svg class="w-full h-full opacity-80 group-hover:scale-105 transition-transform duration-1000" viewBox="0 0 200 300" fill="none">
+                                <path d="M100,30 C110,50 120,70 125,100 C130,130 140,190 145,240 L130,280 L100,220 L70,280 L55,240 C60,190 70,130 75,100 C80,70 90,50 100,30 Z" fill="url(#goldGrad)" opacity="0.15"/>
+                                <path d="M100,30 L125,100 M125,100 L145,240 M145,240 L130,280 M130,280 L100,220 M100,220 L70,280 M70,280 L55,240 M55,240 L75,100 M75,100 L100,30 Z" stroke="#D4AF37" stroke-width="0.75" stroke-dasharray="2 2"/>
+                                <circle cx="100" cy="30" r="4" fill="#FFF"/>
+                                <line x1="50" y1="120" x2="150" y2="120" stroke="#D4AF37" stroke-width="0.5" opacity="0.3"/>
+                                <line x1="40" y1="180" x2="160" y2="180" stroke="#D4AF37" stroke-width="0.5" opacity="0.3"/>
+                                <defs>
+                                    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#FFF" />
+                                        <stop offset="100%" stop-color="#D4AF37" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            
+                            <!-- Smart Hover Interaction Panel Blueprint overlay overlay -->
+                            <div class="absolute inset-0 bg-black/90 backdrop-blur-md p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-between text-left z-30">
+                                <div class="space-y-4">
+                                    <h4 class="font-luxury text-lg text-[#D4AF37]">Lunar Eclipse Evening Gown</h4>
+                                    <p class="text-xs font-light text-[#E7DDD2]/70 leading-relaxed">Generated breakdown analytics indicate high structural stability across structural bias metrics.</p>
+                                    <div class="border-t border-[rgba(212,175,55,0.1)] pt-4 space-y-2">
+                                        <div class="flex justify-between text-[11px]"><span class="text-[#E7DDD2]/40 uppercase tracking-wider">Difficulty:</span><span class="text-white font-mono font-medium">Professional</span></div>
+                                        <div class="flex justify-between text-[11px]"><span class="text-[#E7DDD2]/40 uppercase tracking-wider">Season:</span><span class="text-white font-mono font-medium">Winter 2026</span></div>
+                                        <div class="flex justify-between text-[11px]"><span class="text-[#E7DDD2]/40 uppercase tracking-wider">Est. Production:</span><span class="text-white font-mono font-medium">48 Hours</span></div>
+                                    </div>
+                                </div>
+                                <div class="text-[10px] font-mono tracking-widest text-[#D4AF37]/60 uppercase">QAMAR DATA CAPTURE SYSTEM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Client State Live Cost Estimation Calculator Module Component -->
+                    <div class="glass-panel p-6 space-y-4 rounded-sm shadow-xl">
+                        <h3 data-i18n="showcase.calcTitle" class="text-sm tracking-[0.2em] uppercase font-semibold text-white border-b border-[rgba(212,175,55,0.1)] pb-3">Dynamic Budget Matrix</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-[11px] uppercase tracking-widest text-[#E7DDD2]/50 block mb-1">Material Base Cost ($/meter)</label>
+                                <input type="number" id="costMaterial" value="45" oninput="calculateOutputs()" class="w-full bg-[#102A43]/20 border border-gold-subtle rounded-none px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#D4AF37]">
+                            </div>
+                            <div>
+                                <label class="text-[11px] uppercase tracking-widest text-[#E7DDD2]/50 block mb-1">Tailoring Labor Hours</label>
+                                <input type="number" id="costLabor" value="32" oninput="calculateOutputs()" class="w-full bg-[#102A43]/20 border border-gold-subtle rounded-none px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#D4AF37]">
+                            </div>
+                            <div class="pt-4 border-t border-[rgba(212,175,55,0.05)] space-y-2">
+                                <div class="flex justify-between text-xs"><span class="text-[#E7DDD2]/70">Calculated Cost Base:</span><span id="resProduction" class="font-mono text-[#D4AF37] font-semibold">$0.00</span></div>
+                                <div class="flex justify-between text-xs"><span class="text-[#E7DDD2]/70">Target Premium Retail (3x markup):</span><span id="resRetail" class="font-mono text-white font-semibold">$0.00</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Column: Extended Architectural Pattern & Construction Vectors -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="glass-panel p-6 rounded-sm space-y-6 shadow-2xl">
+                        <div class="flex justify-between items-center border-b border-[rgba(212,175,55,0.1)] pb-4">
+                            <h3 data-i18n="showcase.docTitle" class="text-sm tracking-[0.2em] uppercase font-semibold text-[#D4AF37]">CAD Technical Blueprint Breakdown</h3>
+                            <span class="text-[10px] bg-[#102A43] px-3 py-1 text-white uppercase font-mono tracking-widest">SVG Render Engine active</span>
+                        </div>
+
+                        <!-- Technical SVG Canvas Architecture Layout for CAD pattern drafting -->
+                        <div class="w-full bg-[#0F172A]/40 border border-dashed border-[rgba(212,175,55,0.2)] p-4 rounded-sm aspect-[16/9] flex items-center justify-center relative overflow-hidden">
+                            <svg class="w-full h-full" viewBox="0 0 600 300" fill="none">
+                                <!-- Blueprint grid coordinate matrices layouts -->
+                                <g stroke="rgba(212,175,55,0.05)" stroke-width="0.5">
+                                    <line x1="50" y1="0" x2="50" y2="300" /> <line x1="100" y1="0" x2="100" y2="300" />
+                                    <line x1="150" y1="0" x2="150" y2="300" /> <line x1="200" y1="0" x2="200" y2="300" />
+                                    <line x1="250" y1="0" x2="250" y2="300" /> <line x1="300" y1="0" x2="300" y2="300" />
+                                    <line x1="350" y1="0" x2="350" y2="300" /> <line x1="400" y1="0" x2="400" y2="300" />
+                                    <line x1="450" y1="0" x2="450" y2="300" /> <line x1="500" y1="0" x2="500" y2="300" />
+                                    <line x1="550" y1="0" x2="550" y2="300" />
+                                    <line x1="0" y1="50" x2="600" y2="50" /> <line x1="0" y1="100" x2="600" y2="100" />
+                                    <line x1="0" y1="105" x2="600" y2="105" /> <line x1="0" y1="200" x2="600" y2="200" />
+                                    <line x1="0" y1="250" x2="600" y2="250" />
+                                </g>
+                                <!-- Structural pattern vectors -->
+                                <path d="M80,50 L220,50 L250,150 L180,260 L120,260 L50,150 Z" stroke="#D4AF37" stroke-width="1" fill="rgba(212,175,55,0.02)"/>
+                                <path d="M350,50 C380,40 420,40 450,50 L520,180 L470,260 L330,260 Z" stroke="#FFF" stroke-width="1" stroke-dasharray="4 4"/>
+                                <!-- Calibration markers mapping labels -->
+                                <circle cx="80" cy="50" r="3" fill="#6A1E2D" />
+                                <circle cx="220" cy="50" r="3" fill="#6A1E2D" />
+                                <text x="90" y="70" fill="#D4AF37" font-family="monospace" font-size="9">A1: 140mm</text>
+                                <text x="360" y="80" fill="#FFF" font-family="monospace" font-size="9">B2: Bias Curve 12°</text>
+                            </svg>
+                        </div>
+
+                        <!-- Real-time extraction of primary color matrices -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <h4 class="text-xs uppercase tracking-widest font-semibold text-white">Dominant Color Analytics Extraction</h4>
+                                <div class="flex gap-2">
+                                    <div class="flex-1 h-12 bg-[#0A0A0A] border border-gold-subtle flex flex-col justify-end p-1.5"><span class="font-mono text-[9px] text-white">#0A0A0A</span></div>
+                                    <div class="flex-1 h-12 bg-[#D4AF37] border border-gold-subtle flex flex-col justify-end p-1.5"><span class="font-mono text-[9px] text-[#0A0A0A]">#D4AF37</span></div>
+                                    <div class="flex-1 h-12 bg-[#102A43] border border-gold-subtle flex flex-col justify-end p-1.5"><span class="font-mono text-[9px] text-white">#102A43</span></div>
+                                    <div class="flex-1 h-12 bg-[#6A1E2D] border border-gold-subtle flex flex-col justify-end p-1.5"><span class="font-mono text-[9px] text-white">#6A1E2D</span></div>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <h4 class="text-xs uppercase tracking-widest font-semibold text-white">Automated Material Diagnostics</h4>
+                                <div class="text-xs font-light text-[#E7DDD2]/80 bg-[#102A43]/10 p-3 border border-gold-subtle/30">
+                                    Primary structural element composed of <span class="text-[#D4AF37] font-medium">85% Mulberry Silk Brocade</span>, 15% metallic filament blend ensuring structural integrity along active tension folds.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Component 17: Architectural Evolution Pipeline Timeline Tracker -->
+                        <div class="border-t border-[rgba(212,175,55,0.1)] pt-6 space-y-4">
+                            <h4 class="text-xs uppercase tracking-widest font-semibold text-white">Design Synthesis Evolution Timeline</h4>
+                            <div class="grid grid-cols-4 gap-2 text-center relative">
+                                <div class="p-3 bg-[#102A43]/20 border border-gold-subtle">
+                                    <div class="text-[10px] font-mono text-[#D4AF37] mb-1">PHASE 01</div>
+                                    <div class="text-[11px] font-medium text-white truncate">AI Prompt Mesh</div>
+                                </div>
+                                <div class="p-3 bg-[#102A43]/20 border border-gold-subtle">
+                                    <div class="text-[10px] font-mono text-[#D4AF37] mb-1">PHASE 02</div>
+                                    <div class="text-[11px] font-medium text-white truncate">Vector Plotting</div>
+                                </div>
+                                <div class="p-3 bg-[#102A43]/20 border border-gold-subtle">
+                                    <div class="text-[10px] font-mono text-[#D4AF37] mb-1">PHASE 03</div>
+                                    <div class="text-[11px] font-medium text-white truncate">Pattern Draft</div>
+                                </div>
+                                <div class="p-3 bg-[#D4AF37] text-[#0A0A0A] font-semibold">
+                                    <div class="text-[10px] font-mono opacity-80 mb-1">PHASE 04</div>
+                                    <div class="text-[11px] truncate">Hologram Complete</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Component 18: Integrated Mock AI Fashion Tutor Interface Framework -->
+                        <div class="border-t border-[rgba(212,175,55,0.1)] pt-6 space-y-4">
+                            <div class="flex items-center gap-2 text-white">
+                                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                <h4 class="text-xs uppercase tracking-widest font-semibold">QAMAR Automated Expert Studio Tutor</h4>
+                            </div>
+                            <div class="bg-[#0A0A0A] border border-gold-subtle/40 p-4 rounded-sm space-y-3 max-h-48 overflow-y-auto" id="tutorTerminal">
+                                <div class="text-xs font-mono text-[#D4AF37]">[SYSTEM INTERACTION LAYER INITIALIZED]</div>
+                                <div class="text-xs font-light text-[#E7DDD2]/90"><strong class="text-[#D4AF37]">AI:</strong> Greetings designer. Select an evaluation route below to synthesize critical structural vector feedback on your current fabric selections.</div>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="triggerTutorAction('shear')" class="px-3 py-1.5 bg-[#102A43]/40 border border-gold-subtle/50 text-[11px] text-[#E7DDD2] hover:border-[#D4AF37] transition-all">Evaluate Shear Stress</button>
+                                <button onclick="triggerTutorAction('drape')" class="px-3 py-1.5 bg-[#102A43]/40 border border-gold-subtle/50 text-[11px] text-[#E7DDD2] hover:border-[#D4AF37] transition-all">Calculate Drape Coeff.</button>
+                                <button onclick="triggerTutorAction('market')" class="px-3 py-1.5 bg-[#102A43]/40 border border-gold-subtle/50 text-[11px] text-[#E7DDD2] hover:border-[#D4AF37] transition-all">Predict Middle-East Market Fit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Component 4: High-Performance Luxury Fashion Design Academy Preview Matrix -->
+        <section id="academy" class="py-24 bg-gradient-to-b from-[#0A0A0A] via-[#102A43]/10 to-[#0A0A0A]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-16 text-center max-w-2xl mx-auto">
+                    <span data-i18n="academy.meta" class="text-xs tracking-[0.4em] uppercase text-[#D4AF37] font-semibold block mb-2">The Academy</span>
+                    <h2 data-i18n="academy.title" class="text-3xl md:text-5xl font-light text-white">Prestige Knowledge Tracks</h2>
+                    <p data-i18n="academy.desc" class="text-sm font-light text-[#E7DDD2]/60 mt-4">Accelerated paths tailored for enterprise creative direction, luxury branding, and geometric algorithmic pattern generation.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Academy Card Module 1 -->
+                    <div class="glass-panel p-6 rounded-sm flex flex-col justify-between group hover:border-[#D4AF37] transition-all duration-500 shadow-xl">
+                        <div class="space-y-4">
+                            <div class="text-xs font-mono text-[#D4AF37]">TRACK 01 // INTERMEDIATE</div>
+                            <h3 class="font-luxury text-xl text-white group-hover:text-[#D4AF37] transition-colors">Advanced Pattern Mathematics</h3>
+                            <p class="text-xs font-light text-[#E7DDD2]/70 leading-relaxed">Mastering curve calculation models, complex geometry mapping arrays, and dynamic non-destructive seam line generation tools.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-[rgba(212,175,55,0.05)] flex justify-between items-center text-xs">
+                            <span class="text-[#E7DDD2]/40 uppercase tracking-widest">12 Modules</span>
+                            <span class="text-[#D4AF37] font-semibold uppercase tracking-wider group-hover:underline cursor-pointer">Enroll Track →</span>
+                        </div>
+                    </div>
+                    <!-- Academy Card Module 2 -->
+                    <div class="glass-panel p-6 rounded-sm flex flex-col justify-between group hover:border-[#D4AF37] transition-all duration-500 shadow-xl">
+                        <div class="space-y-4">
+                            <div class="text-xs font-mono text-[#D4AF37]">TRACK 02 // PROFESSIONAL</div>
+                            <h3 class="font-luxury text-xl text-white group-hover:text-[#D4AF37] transition-colors">Textile Science & Molecular Architecture</h3>
+                            <p class="text-xs font-light text-[#E7DDD2]/70 leading-relaxed">Deep-dive evaluations into fiber tensile stress metrics, structural elasticity vectors, and custom digital asset compilation techniques.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-[rgba(212,175,55,0.05)] flex justify-between items-center text-xs">
+                            <span class="text-[#E7DDD2]/40 uppercase tracking-widest">18 Modules</span>
+                            <span class="text-[#D4AF37] font-semibold uppercase tracking-wider group-hover:underline cursor-pointer">Enroll Track →</span>
+                        </div>
+                    </div>
+                    <!-- Academy Card Module 3 -->
+                    <div class="glass-panel p-6 rounded-sm flex flex-col justify-between group hover:border-[#D4AF37] transition-all duration-500 shadow-xl">
+                        <div class="space-y-4">
+                            <div class="text-xs font-mono text-[#D4AF37]">TRACK 03 // EXECUTIVE</div>
+                            <h3 class="font-luxury text-xl text-white group-hover:text-[#D4AF37] transition-colors">Luxury Brand Semiotics</h3>
+                            <p class="text-xs font-light text-[#E7DDD2]/70 leading-relaxed">Navigating multi-channel enterprise pricing frameworks, consumer psychographic data mining, and global heritage supply chain design.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-[rgba(212,175,55,0.05)] flex justify-between items-center text-xs">
+                            <span class="text-[#E7DDD2]/40 uppercase tracking-widest">8 Modules</span>
+                            <span class="text-[#D4AF37] font-semibold uppercase tracking-wider group-hover:underline cursor-pointer">Enroll Track →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component 7: AI Predictive Studio Mock Simulation Hub -->
+        <section id="ai-studio" class="py-24 max-w-7xl mx-auto px-6">
+            <div class="glass-panel p-8 md:p-12 relative overflow-hidden rounded-sm shadow-2xl">
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <span data-i18n="studio.meta" class="text-xs tracking-[0.3em] uppercase text-[#D4AF37] font-semibold block">Generative Engine Suite</span>
+                        <h2 data-i18n="studio.title" class="text-3xl md:text-5xl font-light text-white leading-tight">Predictive AI <br>Generative Design Studio</h2>
+                        <p data-i18n="studio.desc" class="text-sm font-light text-[#E7DDD2]/70 leading-relaxed">
+                            Simulate deep machine neural execution pipelines. Convert textual prompt arrays or historic heritage vector sketches directly into manufacturing-ready cutting patterns automatically.
+                        </p>
+                        <!-- Simulated Real-time Interface Loop Form input -->
+                        <div class="space-y-3 pt-2">
+                            <div class="relative">
+                                <input type="text" id="aiPromptInput" placeholder="Describe architectural geometry silhouette (e.g., asymmetrical draped raw silk evening lapels)..." class="w-full bg-[#0A0A0A] border border-gold-subtle rounded-none px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D4AF37] pr-24">
+                                <button onclick="simulateStudioGeneration()" class="absolute right-1 top-1 bottom-1 px-4 bg-[#D4AF37] text-[#0A0A0A] text-[10px] font-bold uppercase tracking-widest hover:bg-white transition-colors">Synthesize</button>
+                            </div>
+                            <div class="id-badge flex justify-between items-center text-[10px] text-[#E7DDD2]/40 font-mono tracking-widest uppercase">
+                                <span>Status: Core Cluster Standby</span>
+                                <span>Model Architecture v4.2-Pro</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Generation Output Visualization Module Container panel -->
+                    <div class="bg-[#0A0A0A] border border-gold-subtle/30 rounded-sm aspect-[4/3] p-6 flex flex-col justify-between relative overflow-hidden group">
+                        <div class="flex justify-between items-center border-b border-[rgba(212,175,55,0.05)] pb-3 z-10">
+                            <span class="text-[10px] font-mono uppercase text-[#D4AF37]">Neural Output Workspace</span>
+                            <span class="w-2 h-2 bg-yellow-500 rounded-full" id="workspaceIndicator"></span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center p-4 text-center z-10" id="generationOutputTarget">
+                            <p class="text-xs font-mono text-[#E7DDD2]/40 animate-pulse">[Await prompt parameters configuration array...]</p>
+                        </div>
+                        <div class="text-[9px] font-mono text-[#E7DDD2]/30 border-t border-[rgba(212,175,55,0.05)] pt-2 text-right z-10">
+                            SECURE COUTURE PLATFORM COMPILING ENGINE
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component 6: Fabric Technical Specifications Repository Swatch Library Preview -->
+        <section id="fabrics" class="py-24 max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <span class="text-xs tracking-[0.3em] uppercase text-[#D4AF37] font-semibold block mb-2">Procurement Matrix</span>
+                <h2 class="text-2xl md:text-4xl font-light text-white">Technical Textile Swatch Vault</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Fabric Vault Item 1 -->
+                <div class="glass-panel p-4 rounded-sm space-y-4 hover:border-[#D4AF37] transition-all duration-300 shadow-lg">
+                    <div class="w-full aspect-square bg-gradient-to-tr from-[#1E3A8A]/30 to-[#6A1E2D]/20 border border-gold-subtle/20 flex items-center justify-center relative group overflow-hidden">
+                        <!-- Abstract textile weave lines -->
+                        <svg class="w-full h-full opacity-30" viewBox="0 0 100 100"><g stroke="#D4AF37" stroke-width="0.2"><line x1="0" y1="10" x2="100" y2="10"/><line x1="0" y1="20" x2="100" y2="20"/><line x1="0" y1="30" x2="100" y2="30"/><line x1="0" y1="40" x2="100" y2="40"/><line x1="10" y1="0" x2="10" y2="100"/><line x1="20" y1="0" x2="20" y2="100"/><line x1="30" y1="0" x2="30" y2="100"/><line x1="40" y1="0" x2="40" y2="100"/></g></svg>
+                        <span class="absolute text-[10px] uppercase font-mono tracking-widest text-[#D4AF37] bg-black/80 px-2 py-1">Mulberry Silk</span>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs font-medium text-white"><span>Brocade Silk Matrix</span><span class="font-mono text-[#D4AF37]">$78/m</span></div>
+                        <div class="flex justify-between text-[10px] font-mono text-[#E7DDD2]/50"><span>Weight: 85g/m²</span><span>Stretch: 0.5%</span></div>
+                    </div>
+                </div>
+                <!-- Fabric Vault Item 2 -->
+                <div class="glass-panel p-4 rounded-sm space-y-4 hover:border-[#D4AF37] transition-all duration-300 shadow-lg">
+                    <div class="w-full aspect-square bg-gradient-to-tr from-[#0A0A0A] to-[#102A43] border border-gold-subtle/20 flex items-center justify-center relative group overflow-hidden">
+                        <svg class="w-full h-full opacity-30" viewBox="0 0 100 100"><g stroke="#FFF" stroke-width="0.2"><line x1="0" y1="5" x2="100" y2="95"/><line x1="0" y1="15" x2="100" y2="105"/><line x1="5" y1="0" x2="95" y2="100"/></g></svg>
+                        <span class="absolute text-[10px] uppercase font-mono tracking-widest text-[#D4AF37] bg-black/80 px-2 py-1">Cashmere</span>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs font-medium text-white"><span>Organic Highland Wool</span><span class="font-mono text-[#D4AF37]">$120/m</span></div>
+                        <div class="flex justify-between text-[10px] font-mono text-[#E7DDD2]/50"><span>Weight: 310g/m²</span><span>Stretch: 4.2%</span></div>
+                    </div>
+                </div>
+                <!-- Fabric Vault Item 3 -->
+                <div class="glass-panel p-4 rounded-sm space-y-4 hover:border-[#D4AF37] transition-all duration-300 shadow-lg">
+                    <div class="w-full aspect-square bg-gradient-to-tr from-[#6A1E2D]/40 to-[#0A0A0A] border border-gold-subtle/20 flex items-center justify-center relative group overflow-hidden">
+                        <svg class="w-full h-full opacity-20" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#D4AF37" stroke-width="0.2" fill="none"/><circle cx="50" cy="50" r="30" stroke="#FFF" stroke-width="0.1" fill="none"/></svg>
+                        <span class="absolute text-[10px] uppercase font-mono tracking-widest text-[#D4AF37] bg-black/80 px-2 py-1">Crêpe De Chine</span>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs font-medium text-white"><span>Fluid Crêpe Matrix</span><span class="font-mono text-[#D4AF37]">$42/m</span></div>
+                        <div class="flex justify-between text-[10px] font-mono text-[#E7DDD2]/50"><span>Weight: 60g/m²</span><span>Stretch: 8.0%</span></div>
+                    </div>
+                </div>
+                <!-- Fabric Vault Item 4 -->
+                <div class="glass-panel p-4 rounded-sm space-y-4 hover:border-[#D4AF37] transition-all duration-300 shadow-lg">
+                    <div class="w-full aspect-square bg-gradient-to-b from-[#102A43]/60 to-[#0A0A0A] border border-gold-subtle/20 flex items-center justify-center relative group overflow-hidden">
+                        <svg class="w-full h-full opacity-30" viewBox="0 0 100 100"><g stroke="#D4AF37" stroke-width="0.3"><path d="M0,50 Q25,20 50,50 T100,50" fill="none"/><path d="M0,60 Q25,30 50,60 T100,60" fill="none"/></g></svg>
+                        <span class="absolute text-[10px] uppercase font-mono tracking-widest text-[#D4AF37] bg-black/80 px-2 py-1">Structured Organza</span>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs font-medium text-white"><span>Glass Crystalline Organza</span><span class="font-mono text-[#D4AF37]">$55/m</span></div>
+                        <div class="flex justify-between text-[10px] font-mono text-[#E7DDD2]/50"><span>Weight: 35g/m²</span><span>Stretch: 0.1%</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component 8: Community Challenge Spotlight Engagement Feed -->
+        <section id="community" class="py-24 bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]/50 border-t border-[rgba(212,175,55,0.05)]">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="space-y-4">
+                    <span class="text-xs tracking-[0.3em] uppercase text-[#D4AF37] font-semibold block">Social Synthesis Hub</span>
+                    <h2 class="text-2xl md:text-4xl font-light text-white">Couture Guild Active Challenges</h2>
+                    <p class="text-xs font-light text-[#E7DDD2]/60 leading-relaxed">Engage directly within active monthly multi-tenant engineering prompts. Cross-evaluate design builds across peer review network metrics.</p>
+                </div>
+                <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-panel p-6 rounded-sm space-y-4 relative">
+                        <div class="flex justify-between text-[10px] font-mono text-[#D4AF37]"><span>PROMPT #24 // LIVE</span><span>84 active designers</span></div>
+                        <h3 class="font-luxury text-lg text-white">Architectural Origami Pleating</h3>
+                        <p class="text-xs font-light text-[#E7DDD2]/70">Simulating geometric compression layers utilizing non-elastic silk or starched canvas bases without visible fastener seams.</p>
+                        <div class="w-full bg-[#D4AF37]/10 h-1 rounded-full overflow-hidden"><div class="w-3/4 bg-[#D4AF37] h-full"></div></div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-sm space-y-4 opacity-60">
+                        <div class="flex justify-between text-[10px] font-mono text-[#E7DDD2]/40"><span>PROMPT #23 // ARCHIVED</span><span>Winner: Studio_Al_Qamar</span></div>
+                        <h3 class="font-luxury text-lg text-white">Lunar Surface Texture Mapping</h3>
+                        <p class="text-xs font-light text-[#E7DDD2]/70">Synthesizing macro topographical crater detailing directly onto velvet structural layers with micro silver beads.</p>
+                        <div class="w-full bg-[#D4AF37]/10 h-1 rounded-full overflow-hidden"><div class="w-full bg-[#D4AF37] h-full"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Component 2: Luxury Asymmetrical Global Footer Architecture -->
+    <footer class="bg-[#0A0A0A] border-t border-[rgba(212,175,55,0.1)] pt-20 pb-8 relative z-20">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-2 space-y-6">
+                <span data-i18n="brand.nameFull" class="font-luxury text-2xl tracking-[0.3em] text-[#D4AF37] font-semibold block">QAMAR | قمر</span>
+                <p data-i18n="footer.tagline" class="text-sm font-light text-[#E7DDD2] leading-relaxed max-w-sm">
+                    Where heritage architecture meets predictive design engineering.
+                </p>
+            </div>
+            <div class="md:col-span-2 space-y-4">
+                <h4 data-i18n="footer.newsletter" class="text-sm tracking-[0.2em] uppercase font-semibold text-white">Join The Inner Circle</h4>
+                <div class="flex max-w-md border border-gold-subtle bg-black">
+                    <input type="email" data-i18n-holder="footer.placeholder" placeholder="Enter your email Address" class="w-full bg-transparent text-white px-4 py-3 text-xs tracking-wider focus:outline-none">
+                    <button class="bg-[#D4AF37] text-[#0A0A0A] px-6 text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors" data-i18n="footer.subscribe">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-[rgba(212,175,55,0.05)] flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-[10px] tracking-widest text-[#E7DDD2]/40 uppercase">
+                © 2026 QAMAR. <span data-i18n="footer.rights">All Rights Reserved.</span>
+            </p>
+            <div class="flex gap-6 text-[10px] tracking-widest text-[#E7DDD2]/40 uppercase">
+                <a href="#" class="hover:text-[#D4AF37]">Privacy Policy</a>
+                <a href="#" class="hover:text-[#D4AF37]">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Interactive Client Execution Architecture Script Engine -->
+    <script>
+        // Dictionary Translation Maps Module Matrix
+        const resources = {
+            en: {
+                "brand.name": "QAMAR",
+                "brand.nameFull": "QAMAR | قمر",
+                "nav.home": "Home",
+                "nav.academy": "Academy",
+                "nav.showcase": "Showcase",
+                "nav.studio": "AI Studio",
+                "nav.fabrics": "Fabrics",
+                "nav.community": "Community",
+                "hero.sub": "Haute Couture Digital Ecosystem",
+                "hero.title": "Where Lunar Artistry Meets <br><span class='text-gold-gradient font-medium italic'>Predictive Design Engineering</span>",
+                "hero.desc": "Unifying enterprise fashion academies, smart algorithm vector breakdown engines, and automated multi-tenant textile procurement houses.",
+                "hero.cta1": "Explore Showcase",
+                "hero.cta2": "Launch Studio",
+                "showcase.meta": "Core Platform Showcase",
+                "showcase.title": "Design Analysis Ecosystem",
+                "showcase.calcTitle": "Dynamic Budget Matrix",
+                "showcase.docTitle": "CAD Technical Blueprint Breakdown",
+                "academy.meta": "The Academy",
+                "academy.title": "Prestige Knowledge Tracks",
+                "academy.desc": "Accelerated paths tailored for enterprise creative direction, luxury branding, and geometric algorithmic pattern generation.",
+                "studio.meta": "Generative Engine Suite",
+                "studio.title": "Predictive AI <br>Generative Design Studio",
+                "studio.desc": "Simulate deep machine neural execution pipelines. Convert textual prompt arrays or historic heritage vector sketches directly into manufacturing-ready cutting patterns automatically.",
+                "footer.tagline": "Where heritage architecture meets predictive design engineering.",
+                "footer.newsletter": "Join The Inner Circle",
+                "footer.placeholder": "Enter your email address",
+                "footer.subscribe": "Subscribe",
+                "footer.rights": "All Rights Reserved."
+            },
+            ar: {
+                "brand.name": "قَمَر",
+                "brand.nameFull": "قَمَر | QAMAR",
+                "nav.home": "الرئيسية",
+                "nav.academy": "الأكاديمية",
+                "nav.showcase": "المعرض الهيكلي",
+                "nav.studio": "استوديو الذكاء",
+                "nav.fabrics": "الأقمشة التقنية",
+                "nav.community": "المجتمع الإبداعي",
+                "hero.sub": "النظام البيئي الرقمي للأزياء الراقية",
+                "hero.title": "حيث تلتقي عراقة التصميم الفلكي <br><span class='text-gold-gradient font-medium italic'>مع الهندسة التنبؤية الذكية</span>",
+                "hero.desc": "منصة موحدة تجمع أكاديميات التصميم الاحترافية، ومحركات تحليل المتجهات الهيكلية، ودور شراء المنسوجات المؤتمتة.",
+                "hero.cta1": "استكشف المعرض",
+                "hero.cta2": "شغّل الاستوديو",
+                "showcase.meta": "معرض المنصة الرئيسي",
+                "showcase.title": "منظومة تحليل التصاميم المعقدة",
+                "showcase.calcTitle": "مصفوفة الميزانية الديناميكية",
+                "showcase.docTitle": "مخطط التصميم الفني والهندسي (CAD)",
+                "academy.meta": "الأكاديمية الفاخرة",
+                "academy.title": "مسارات المعرفة الاحترافية",
+                "academy.desc": "مسارات تعليمية متقدمة مصممة خصيصاً للإدارة الإبداعية للمؤسسات، وبناء العلامات التجارية الفاخرة، وهندسة الأنماط الهندسية.",
+                "studio.meta": "أجنحة المحركات التوليدية",
+                "studio.title": "استوديو تصميم الأزياء <br>التنبئي بالذكاء الاصطناعي",
+                "studio.desc": "حاكِ خطوط الإنتاج العصبي العميق للآلة. حوّل نصوص الأوامر أو المخططات التراثية مباشرة إلى أنماط قص هندسية جاهزة للتصنيع الفوري.",
+                "footer.tagline": "حيث تلتقي عراقة العمارة التراثية مع هندسة التصميم التنبؤية المستقبلية.",
+                "footer.newsletter": "انضم إلى عالم قمر الخاص",
+                "footer.placeholder": "أدخل بريدك الإلكتروني",
+                "footer.subscribe": "اشتراك",
+                "footer.rights": "جميع الحقوق محفوظة."
+            }
+        };
+
+        let currentLocale = "en";
+
+        // State Machine Internationalization Handler Engine
+        function updateLocalizationUI() {
+            const dictionary = resources[currentLocale];
+            
+            // Text Content Translation Injection
+            document.querySelectorAll("[data-i18n]").forEach(element => {
+                const key = element.getAttribute("data-i18n");
+                if(dictionary[key]) {
+                    element.innerHTML = dictionary[key];
+                }
+            });
+
+            // Input Placeholder Translation Injection
+            document.querySelectorAll("[data-i18n-holder]").forEach(element => {
+                const key = element.getAttribute("data-i18n-holder");
+                if(dictionary[key]) {
+                    element.setAttribute("placeholder", dictionary[key]);
+                }
+            });
+
+            // Adjust document layout flow mechanics directional matrices
+            const htmlNode = document.documentElement;
+            if(currentLocale === "ar") {
+                htmlNode.setAttribute("dir", "rtl");
+                htmlNode.setAttribute("lang", "ar");
+                document.getElementById("langBtnText").innerText = "English";
+            } else {
+                htmlNode.setAttribute("dir", "ltr");
+                htmlNode.setAttribute("lang", "en");
+                document.getElementById("langBtnText").innerText = "العربية";
+            }
+        }
+
+        function toggleLanguage() {
+            currentLocale = (currentLocale === "en") ? "ar" : "en";
+            updateLocalizationUI();
+        }
+
+        // Mobile Nav Overlay Drawer Trigger UI State Loop
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobileMenu");
+            menu.classList.toggle("hidden");
+        }
+
+        // Scroll Background Alpha Interpolation Utility Event Loop
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById("navbar");
+            if(window.scrollY > 40) {
+                nav.classList.remove("py-6", "bg-transparent");
+                nav.classList.add("glass-panel", "py-4");
+            } else {
+                nav.classList.remove("glass-panel", "py-4");
+                nav.classList.add("py-6", "bg-transparent");
+            }
+            
+            // Subtle scroll reactive fade reveals matrix loop
+            document.querySelectorAll('.fade-in-element').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if(rect.top < window.innerHeight * 0.95) {
+                    el.classList.add('visible');
+                }
+            });
+        });
+
+        // Component 5: Dynamic Cost Calculator Component Calculation Logic
+        function calculateOutputs() {
+            const matCost = parseFloat(document.getElementById("costMaterial").value) || 0;
+            const laborHours = parseFloat(document.getElementById("costLabor").value) || 0;
+            
+            // Custom luxury formula parameter scaling factors
+            const materialMetersNeeded = 4.5;
+            const hourlyLaborRate = 35;
+            
+            const baseProduction = (matCost * materialMetersNeeded) + (laborHours * hourlyLaborRate);
+            const premiumRetail = baseProduction * 3.15;
+            
+            document.getElementById("resProduction").innerText = "$" + baseProduction.toFixed(2);
+            document.getElementById("resRetail").innerText = "$" + premiumRetail.toFixed(2);
+        }
+
+        // Component 18: Simulated Studio Interactive AI Response Routing Framework 
+        function triggerTutorAction(actionType) {
+            const terminal = document.getElementById("tutorTerminal");
+            let responseStr = "";
+            
+            switch(actionType) {
+                case 'shear':
+                    responseStr = "<strong class='text-[#D4AF37]'>AI [Analysis Engine]:</strong> Detected zero displacement cross structural seams. Warp tension calculation resolves at stable 14.2 N/m.";
+                    break;
+                case 'drape':
+                    responseStr = "<strong class='text-[#D4AF37]'>AI [Analysis Engine]:</strong> Calculated drape coefficient is 0.42. Fluid cascade velocity matches targeted rendering models for high-contrast presentation stages.";
+                    break;
+                case 'market':
+                    responseStr = "<strong class='text-[#D4AF37]'>AI [Predictive Core]:</strong> High matching index within luxury GCC target demographics. Recommend matching primary gold brocade with deep velvety jewel tone layers.";
+                    break;
+            }
+            
+            terminal.innerHTML += `<div class='text-xs font-light text-[#E7DDD2] mt-2'>${responseStr}</div>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        // Component 7: Generative Studio Neural Pipeline Mock Simulator
+        function simulateStudioGeneration() {
+            const inputVal = document.getElementById("aiPromptInput").value;
+            const targetWorkspace = document.getElementById("generationOutputTarget");
+            const indicator = document.getElementById("workspaceIndicator");
+            
+            if(!inputVal.trim()) return;
+            
+            indicator.className = "w-2 h-2 bg-red-500 animate-ping";
+            targetWorkspace.innerHTML = `<p class="text-xs font-mono text-[#D4AF37] animate-pulse">[Accessing Neural Arrays... Compiling Vector Fields...]</p>`;
+            
+            setTimeout(() => {
+                indicator.className = "w-2 h-2 bg-green-400 shadow-[0_0_8px_#4ade80]";
+                targetWorkspace.innerHTML = `
+                    <div class="space-y-4 text-left w-full fade-in-element visible">
+                        <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-[11px] font-luxury text-white">Synthesized Spline Array</span><span class="text-[9px] font-mono text-green-400">PASSED</span></div>
+                        <p class="text-[11px] font-light text-[#E7DDD2]/90">Successfully transformed parameters into high couture output matrices matching description: "${inputVal}".</p>
+                        <div class="p-3 bg-[#102A43]/30 border border-[#D4AF37]/30 font-mono text-[9px] text-[#D4AF37] space-y-1">
+                            <div>&gt; SEAM PROFILE: REINFORCED STITCH LAYER</div>
+                            <div>&gt; PATTERN COORD: [X: 450.22 / Y: 109.81]</div>
+                            <div>&gt; VECTOR RENDER: 3D_MESH_DALL-E-MOCK.OBJ</div>
+                        </div>
+                    </div>
+                `;
+            }, 1800);
+        }
+
+        // Ambient Background Star Particles Canvas Implementation Engine Loop
+        const canvas = document.getElementById('particleField');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.2 + 0.3;
+                this.speedY = Math.random() * -0.15 - 0.05;
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth / 12), 100);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Global Orchestration Initialization Lifecycle Entry Hooks
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateOutputs();
+            initParticles();
+            animateParticles();
+            
+            // Trigger baseline visibility updates across scroll tracking components
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in-element').forEach(el => el.classList.add('visible'));
+            }, 100);
+        });
+    </script>
+</body>
+</html>
